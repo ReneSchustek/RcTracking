@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/shopware/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>Tracking-Konfiguration</title>
+        <title lang="en-GB">Tracking Configuration</title>
+
+        <input-field type="text">
+            <name>gtmId</name>
+            <label>GTM ID</label>
+            <label lang="en-GB">GTM ID</label>
+            <placeholder>GTM-XXXXXXX</placeholder>
+            <helpText>Google Tag Manager Container-ID. Bei aktivem GTM UET und Custom Code nur für Dienste nutzen, die nicht über GTM verwaltet werden.</helpText>
+            <helpText lang="en-GB">Google Tag Manager container ID. If GTM is active, use UET and custom code only for services not managed via GTM.</helpText>
+        </input-field>
+
+        <input-field type="switch">
+            <name>uetEnabled</name>
+            <label>Microsoft UET aktiv</label>
+            <label lang="en-GB">Enable Microsoft UET</label>
+            <defaultValue>false</defaultValue>
+        </input-field>
+
+        <input-field type="text">
+            <name>uetId</name>
+            <label>Microsoft UET ID</label>
+            <label lang="en-GB">Microsoft UET ID</label>
+            <placeholder>123456789</placeholder>
+            <helpText>Bing Ads Tag-ID aus dem Microsoft Advertising-Konto.</helpText>
+            <helpText lang="en-GB">Bing Ads tag ID from your Microsoft Advertising account.</helpText>
+        </input-field>
+
+        <input-field type="textarea">
+            <name>customCode</name>
+            <label>Benutzerdefinierter Tracking-Code</label>
+            <label lang="en-GB">Custom Tracking Code</label>
+            <helpText>Nur reinen JavaScript-Code eingeben – keine &lt;script&gt;-Tags. Der Code wird nach Consent des Nutzers ausgeführt. Geeignet für Meta Pixel, TikTok Pixel, Affiliate-Tracking u. a.</helpText>
+            <helpText lang="en-GB">Enter pure JavaScript only – no &lt;script&gt; tags. The code runs after user consent. Suitable for Meta Pixel, TikTok Pixel, affiliate tracking, etc.</helpText>
+        </input-field>
+    </card>
+</config>

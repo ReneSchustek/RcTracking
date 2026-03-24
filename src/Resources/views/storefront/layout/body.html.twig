@@ -1,0 +1,15 @@
+{% sw_extends '@Storefront/storefront/layout/body.html.twig' %}
+
+{% block layout_body_inner %}
+    {% set gtmId = config('RcTracking.config.gtmId') %}
+    {% if gtmId %}
+    {# GTM noscript-Fallback: wird von Browsern ohne JavaScript genutzt #}
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id={{ gtmId|e('html_attr') }}"
+                height="0"
+                width="0"
+                style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    {% endif %}
+    {{ parent() }}
+{% endblock %}

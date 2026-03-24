@@ -8,12 +8,12 @@ use PHPUnit\Framework\TestCase;
 use Ruhrcoder\RcTracking\RcTracking;
 
 /**
- * Smoke-Test: Plugin-Klasse muss instanziierbar sein.
+ * Smoke-Test: Plugin-Klasse und Namespace korrekt gesetzt.
  */
 final class RcTrackingTest extends TestCase
 {
-    public function testPluginClassExists(): void
+    public function testPluginHasCorrectClass(): void
     {
-        self::assertTrue(class_exists(RcTracking::class));
+        self::assertSame('Ruhrcoder\\RcTracking\\RcTracking', RcTracking::class);
     }
 }

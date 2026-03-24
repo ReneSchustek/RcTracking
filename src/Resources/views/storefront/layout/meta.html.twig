@@ -1,0 +1,90 @@
+{% sw_extends '@Storefront/storefront/layout/meta.html.twig' %}
+
+{% block layout_head_javascript_tracking %}
+    {{ parent() }}
+
+    {% set gtmId     = config('RcTracking.config.gtmId') %}
+    {% set uetEnabled = config('RcTracking.config.uetEnabled') %}
+    {% set uetId     = config('RcTracking.config.uetId') %}
+    {% set customCode = config('RcTracking.config.customCode') %}
+
+    {# Nur rendern wenn mindestens ein Tracking-Dienst konfiguriert ist #}
+    {% if gtmId or (uetEnabled and uetId) or customCode %}
+    <script>
+    (function () {
+        'use strict';
+
+        var trackingLoaded = false;
+
+        function loadTracking() {
+            {# Guard: verhindert Doppelausführung bei gleichzeitigen Events #}
+            if (trackingLoaded) {
+                return;
+            }
+            trackingLoaded = true;
+
+            {% if gtmId %}
+            {# Google Tag Manager #}
+            (function (w, d, s, l, i) {
+                w[l] = w[l] || [];
+                w[l].push({ 'gtm.start': new Date().getTime(), event: 'gtm.js' });
+                var f = d.getElementsByTagName(s)[0];
+                var j = d.createElement(s);
+                var dl = l !== 'dataLayer' ? '&l=' + l : '';
+                j.async = true;
+                j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+                f.parentNode.insertBefore(j, f);
+            }(window, document, 'script', 'dataLayer', '{{ gtmId|e('js') }}'));
+            {% endif %}
+
+            {% if uetEnabled and uetId %}
+            {# Microsoft UET #}
+            (function (w, d, t, r, u) {
+                var f, n, i;
+                w[u] = w[u] || [];
+                f = function () {
+                    var o = { ti: '{{ uetId|e('js') }}' };
+                    o.q = w[u];
+                    w[u] = new UET(o);
+                    w[u].push('pageLoad');
+                };
+                n = d.createElement(t);
+                n.src = r;
+                n.async = 1;
+                n.onload = n.onreadystatechange = function () {
+                    var s = this.readyState;
+                    if (s && s !== 'loaded' && s !== 'complete') {
+                        return;
+                    }
+                    f();
+                    n.onload = n.onreadystatechange = null;
+                };
+                i = d.getElementsByTagName(t)[0];
+                i.parentNode.insertBefore(n, i);
+            }(window, document, 'script', '//bat.bing.com/bat.js', 'uetq'));
+            {% endif %}
+
+            {% if customCode %}
+            {# Benutzerdefinierter Code – <script>-Tags werden serverseitig entfernt #}
+            {{ customCode|striptags|raw }}
+            {% endif %}
+        }
+
+        if (typeof window.__cmp === 'undefined') {
+            {# Kein Consentmanager vorhanden – direkt laden #}
+            loadTracking();
+            return;
+        }
+
+        {# Consent-Events abfangen:
+           useractioncomplete = Nutzer hat gerade entschieden
+           consentapplied     = Consent aus Cookie wiederhergestellt (Wiederkehr) #}
+        window.__cmp('addEventListener', ['consent', function (evt) {
+            if (evt.eventStatus === 'useractioncomplete' || evt.eventStatus === 'consentapplied') {
+                loadTracking();
+            }
+        }, false], null);
+    }());
+    </script>
+    {% endif %}
+{% endblock %}
