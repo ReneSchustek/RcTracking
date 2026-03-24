@@ -38,5 +38,14 @@
             <helpText>Nur reinen JavaScript-Code eingeben – keine &lt;script&gt;-Tags. Der Code wird nach Consent des Nutzers ausgeführt. Geeignet für Meta Pixel, TikTok Pixel, Affiliate-Tracking u. a.</helpText>
             <helpText lang="en-GB">Enter pure JavaScript only – no &lt;script&gt; tags. The code runs after user consent. Suitable for Meta Pixel, TikTok Pixel, affiliate tracking, etc.</helpText>
         </input-field>
+
+        <input-field type="text">
+            <name>cmpMarketingPurposeId</name>
+            <label>Consentmanager Marketing-Purpose-ID</label>
+            <label lang="en-GB">Consentmanager Marketing Purpose ID</label>
+            <placeholder>5</placeholder>
+            <helpText>Purpose-ID aus dem Consentmanager-Dashboard für Marketing-Tracking (z. B. "5"). Tracking wird nur geladen wenn dieser Zweck vom Nutzer erlaubt wurde. Leer lassen um den Purpose-Check zu deaktivieren.</helpText>
+            <helpText lang="en-GB">Purpose ID from the Consentmanager dashboard for marketing tracking (e.g. "5"). Tracking only loads if the user consented to this purpose. Leave empty to disable the purpose check.</helpText>
+        </input-field>
     </card>
 </config>

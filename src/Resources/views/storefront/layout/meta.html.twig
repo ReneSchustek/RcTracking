@@ -3,10 +3,11 @@
 {% block layout_head_javascript_tracking %}
     {{ parent() }}
 
-    {% set gtmId     = config('RcTracking.config.gtmId') %}
-    {% set uetEnabled = config('RcTracking.config.uetEnabled') %}
-    {% set uetId     = config('RcTracking.config.uetId') %}
-    {% set customCode = config('RcTracking.config.customCode') %}
+    {% set gtmId               = config('RcTracking.config.gtmId') %}
+    {% set uetEnabled          = config('RcTracking.config.uetEnabled') %}
+    {% set uetId               = config('RcTracking.config.uetId') %}
+    {% set customCode          = config('RcTracking.config.customCode') %}
+    {% set marketingPurposeId  = config('RcTracking.config.cmpMarketingPurposeId') %}
 
     {# Nur rendern wenn mindestens ein Tracking-Dienst konfiguriert ist #}
     {% if gtmId or (uetEnabled and uetId) or customCode %}
@@ -17,7 +18,7 @@
         var trackingLoaded = false;
 
         function loadTracking() {
-            {# Guard: verhindert Doppelausführung bei gleichzeitigen Events #}
+            {# Guard: verhindert Doppelausführung bei gleichzeitigen CMP-Events #}
             if (trackingLoaded) {
                 return;
             }
@@ -61,7 +62,7 @@
                 };
                 i = d.getElementsByTagName(t)[0];
                 i.parentNode.insertBefore(n, i);
-            }(window, document, 'script', '//bat.bing.com/bat.js', 'uetq'));
+            }(window, document, 'script', 'https://bat.bing.com/bat.js', 'uetq'));
             {% endif %}
 
             {% if customCode %}
@@ -70,20 +71,33 @@
             {% endif %}
         }
 
+        function handleConsent(consentData, success) {
+            if (!success) {
+                return;
+            }
+
+            var status = consentData.eventStatus;
+            if (status !== 'useractioncomplete' && status !== 'consentapplied') {
+                return;
+            }
+
+            {% if marketingPurposeId %}
+            {# Purpose-Check: Tracking nur laden wenn Marketing-Zweck erlaubt #}
+            if (!consentData.purposeConsents || !consentData.purposeConsents['{{ marketingPurposeId|e('js') }}']) {
+                return;
+            }
+            {% endif %}
+
+            loadTracking();
+        }
+
         if (typeof window.__cmp === 'undefined') {
             {# Kein Consentmanager vorhanden – direkt laden #}
             loadTracking();
             return;
         }
 
-        {# Consent-Events abfangen:
-           useractioncomplete = Nutzer hat gerade entschieden
-           consentapplied     = Consent aus Cookie wiederhergestellt (Wiederkehr) #}
-        window.__cmp('addEventListener', ['consent', function (evt) {
-            if (evt.eventStatus === 'useractioncomplete' || evt.eventStatus === 'consentapplied') {
-                loadTracking();
-            }
-        }, false], null);
+        window.__cmp('addEventListener', 2, handleConsent);
     }());
     </script>
     {% endif %}
