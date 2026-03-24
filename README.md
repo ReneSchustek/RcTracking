@@ -1,23 +1,39 @@
 # RcTracking
 
-DSGVO-konformes Shopware 6.7 Plugin zur zentralen Verwaltung von Tracking-Skripten.
+Ein Shopware 6 Plugin von [Ruhrcoder](https://ruhrcoder.de).
 
-## Unterstützte Tracking-Dienste
+---
 
-- **Google Tag Manager (GTM)** – Container-ID konfigurierbar
-- **Microsoft UET (Bing Ads)** – aktivierbar/deaktivierbar, Tag-ID konfigurierbar
-- **Benutzerdefinierter Code** – freies JavaScript-Feld (Meta Pixel, TikTok, Affiliate etc.)
+## Worum geht's?
 
-## DSGVO-Logik
+Tracking-Skripte haben im Theme nichts verloren. Trotzdem landen sie dort – weil es schnell geht, weil es irgendwann mal jemand reingebaut hat, und weil es danach niemand mehr anfasst. Beim nächsten Theme-Update ist der Code weg. Oder er lädt, obwohl der Nutzer gerade Nein gesagt hat.
 
-Alle Skripte werden erst nach Nutzer-Consent über den Consentmanager geladen.
-Fallback: Wenn kein Consentmanager vorhanden, wird das Tracking direkt geladen.
+RcTracking löst das. Das Plugin verwaltet Google Tag Manager, Microsoft UET und beliebigen eigenen Tracking-Code zentral im Admin – und lädt nichts davon, bevor der Nutzer zugestimmt hat.
 
-## Voraussetzungen
+---
 
-- Shopware 6.7.x
-- PHP 8.3
-- Composer 2.x
+## Was kann es?
+
+**Google Tag Manager**
+Container-ID eintragen, fertig. GTM kümmert sich dann um den Rest.
+
+**Microsoft UET (Bing Ads)**
+An/Aus-Schalter und Tag-ID – mehr braucht es nicht.
+
+**Eigener Tracking-Code**
+Für alles andere: Meta Pixel, TikTok, Affiliate-Tracking. Einfach den JavaScript-Code ins Textfeld, das Plugin übernimmt die Einbindung.
+
+---
+
+## DSGVO
+
+Das Plugin wartet, bis der Nutzer eine Entscheidung getroffen hat – egal ob er gerade zum ersten Mal auf der Seite ist oder wiederkommt. Wer Marketing ablehnt, bekommt kein Tracking. Wer schon beim letzten Besuch zugestimmt hat, muss das nicht nochmal tun.
+
+Optional lässt sich eine Marketing-Purpose-ID aus dem Consentmanager hinterlegen. Damit wird das Tracking nur geladen, wenn genau dieser Zweck erlaubt wurde – nicht bei „technisch notwendig" allein.
+
+Kein Consentmanager vorhanden? Dann lädt das Tracking direkt. Für Entwicklungsumgebungen oder Shops, die bewusst ohne CMP arbeiten.
+
+---
 
 ## Installation
 
@@ -28,30 +44,17 @@ bin/console cache:clear
 bin/console theme:compile
 ```
 
-## Konfiguration
+Danach im Admin unter **Einstellungen → Plugins → RcTracking** konfigurieren.
 
-Im Shopware Admin unter **Einstellungen → Plugins → RcTracking**:
+---
 
-| Feld | Beschreibung |
-|------|--------------|
-| GTM ID | Google Tag Manager Container-ID (z. B. `GTM-XXXXXXX`) |
-| Microsoft UET aktiv | Tracking aktivieren/deaktivieren |
-| Microsoft UET ID | Bing Tracking Tag-ID |
-| Benutzerdefinierter Code | Freier JavaScript-Code |
+## Voraussetzungen
 
-## Entwicklung
+- Shopware 6.7
+- PHP 8.3
 
-```bash
-composer install
-composer quality      # CS-Check + PHPStan + Tests
-composer test         # Nur Tests
-composer phpstan      # Nur Statische Analyse
-```
+---
 
 ## Lizenz
 
-MIT – siehe [LICENSE](LICENSE)
-
-## Autor
-
-Ruhrcoder (René Schustek) – [ruhrcoder.de](https://ruhrcoder.de)
+MIT
