@@ -15,7 +15,7 @@
             <helpText lang="en-GB">Google Tag Manager container ID. If GTM is active, use UET and custom code only for services not managed via GTM.</helpText>
         </input-field>
 
-        <input-field type="checkbox">
+        <input-field type="switch">
             <name>uetEnabled</name>
             <label>Microsoft UET aktiv</label>
             <label lang="en-GB">Enable Microsoft UET</label>

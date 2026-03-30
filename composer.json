@@ -3,7 +3,7 @@
     "description": "DSGVO-konformes Tracking-Plugin für Shopware 6.7 (GTM, Microsoft UET, Custom Code)",
     "type": "shopware-platform-plugin",
     "license": "MIT",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "authors": [
         {
             "name": "Ruhrcoder",
