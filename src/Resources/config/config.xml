@@ -11,11 +11,12 @@
             <label>GTM ID</label>
             <label lang="en-GB">GTM ID</label>
             <placeholder>GTM-XXXXXXX</placeholder>
+            <placeholder lang="en-GB">GTM-XXXXXXX</placeholder>
             <helpText>Google Tag Manager Container-ID. Bei aktivem GTM UET und Custom Code nur für Dienste nutzen, die nicht über GTM verwaltet werden.</helpText>
             <helpText lang="en-GB">Google Tag Manager container ID. If GTM is active, use UET and custom code only for services not managed via GTM.</helpText>
         </input-field>
 
-        <input-field type="switch">
+        <input-field type="bool">
             <name>uetEnabled</name>
             <label>Microsoft UET aktiv</label>
             <label lang="en-GB">Enable Microsoft UET</label>
@@ -27,6 +28,7 @@
             <label>Microsoft UET ID</label>
             <label lang="en-GB">Microsoft UET ID</label>
             <placeholder>123456789</placeholder>
+            <placeholder lang="en-GB">123456789</placeholder>
             <helpText>Bing Ads Tag-ID aus dem Microsoft Advertising-Konto.</helpText>
             <helpText lang="en-GB">Bing Ads tag ID from your Microsoft Advertising account.</helpText>
         </input-field>
@@ -44,6 +46,7 @@
             <label>Consentmanager Marketing-Purpose-ID</label>
             <label lang="en-GB">Consentmanager Marketing Purpose ID</label>
             <placeholder>5</placeholder>
+            <placeholder lang="en-GB">5</placeholder>
             <helpText>Purpose-ID aus dem Consentmanager-Dashboard für Marketing-Tracking (z. B. "5"). Tracking wird nur geladen wenn dieser Zweck vom Nutzer erlaubt wurde. Leer lassen um den Purpose-Check zu deaktivieren.</helpText>
             <helpText lang="en-GB">Purpose ID from the Consentmanager dashboard for marketing tracking (e.g. "5"). Tracking only loads if the user consented to this purpose. Leave empty to disable the purpose check.</helpText>
         </input-field>
