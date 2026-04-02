@@ -5,6 +5,8 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
 ## [1.1.0] – 2026-03-24
 
+> **Deployment:** `php bin/console cache:clear`
+
 ### Geändert
 - Consentmanager-API auf bewährtes Format `addEventListener(2, ...)` umgestellt
 - Consent-Callback prüft jetzt `success`-Flag vor Verarbeitung
@@ -14,6 +16,8 @@ Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 - Unterstützung für `consentapplied`-Event (wiederkehrende Besucher mit gespeichertem Consent)
 
 ## [1.0.0] – 2026-03-24
+
+> **Deployment:** `php bin/console cache:clear` (Erstinstallation)
 
 ### Hinzugefügt
 - Google Tag Manager Integration (GTM-ID konfigurierbar)

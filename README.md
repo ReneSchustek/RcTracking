@@ -50,8 +50,8 @@ Danach im Admin unter **Einstellungen → Plugins → RcTracking** konfigurieren
 
 ## Voraussetzungen
 
-- Shopware 6.7
-- PHP 8.3
+- Shopware 6.7 / 6.8
+- PHP 8.2+
 
 ---
 

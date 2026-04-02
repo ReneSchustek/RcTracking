@@ -14,10 +14,4 @@ final class RcTrackingTest extends TestCase
     {
         $this->assertTrue(is_subclass_of(RcTracking::class, Plugin::class));
     }
-
-    public function testGetSubscribedEventsReturnsEmptyArray(): void
-    {
-        // Bootstrapper registriert selbst keine Events
-        $this->assertTrue(true);
-    }
 }

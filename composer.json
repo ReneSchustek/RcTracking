@@ -42,8 +42,8 @@
     "extra": {
         "shopware-plugin-class": "Ruhrcoder\\RcTracking\\RcTracking",
         "label": {
-            "de-DE": "Tracking (GTM, UET)",
-            "en-GB": "Tracking (GTM, UET)"
+            "de-DE": "Tracking-Verwaltung",
+            "en-GB": "Tracking Management"
         },
         "description": {
             "de-DE": "DSGVO-konformes Plugin zur zentralen Verwaltung von Tracking-Skripten: Google Tag Manager, Microsoft UET und benutzerdefinierter Code mit Consentmanager-Integration.",
