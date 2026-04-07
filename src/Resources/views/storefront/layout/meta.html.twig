@@ -72,6 +72,22 @@
             {% endif %}
         }
 
+        function hasMarketingConsent(consentData) {
+            {# Primär: IAB-Standard tcString – CMP-unabhängig und stabil #}
+            if (consentData && typeof consentData.tcString === 'string' && consentData.tcString.length > 0) {
+                return true;
+            }
+
+            {% if marketingPurposeId %}
+            {# Sekundär: purposeConsents falls vom CMP geliefert #}
+            if (consentData && consentData.purposeConsents && consentData.purposeConsents['{{ marketingPurposeId|e('js') }}'] === true) {
+                return true;
+            }
+            {% endif %}
+
+            return false;
+        }
+
         function handleConsent(consentData, success) {
             if (!success) {
                 return;
@@ -82,19 +98,18 @@
                 return;
             }
 
-            {% if marketingPurposeId %}
-            {# Purpose-Check: Tracking nur laden wenn Marketing-Zweck erlaubt #}
-            if (!consentData.purposeConsents || !consentData.purposeConsents['{{ marketingPurposeId|e('js') }}']) {
+            if (!hasMarketingConsent(consentData)) {
                 return;
             }
-            {% endif %}
 
             loadTracking();
         }
 
         if (typeof window.__cmp === 'undefined') {
-            {# Kein Consentmanager vorhanden – direkt laden #}
-            loadTracking();
+            {# Kein CMP vorhanden – DSGVO verbietet Tracking ohne Consent #}
+            if (typeof console !== 'undefined') {
+                console.warn('[RcTracking] Kein Consentmanager gefunden – Tracking wird nicht geladen (DSGVO)');
+            }
             return;
         }
 
