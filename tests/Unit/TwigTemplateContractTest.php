@@ -140,20 +140,20 @@ final class TwigTemplateContractTest extends TestCase
     /**
      * Das GTM-`<noscript>`-Fallback darf NICHT existieren -- und zwar dauerhaft nicht.
      *
-     * Ein <noscript>-iframe laedt bedingungslos: ohne JavaScript gibt es keine Moeglichkeit,
-     * vorher eine Einwilligung zu pruefen. Und ein Nutzer ohne JavaScript kann den
+     * Ein <noscript>-iframe lädt bedingungslos: ohne JavaScript gibt es keine Möglichkeit,
+     * vorher eine Einwilligung zu prüfen. Und ein Nutzer ohne JavaScript kann den
      * Consentmanager nicht bedienen -- der ist selbst JavaScript. Er kann also NIEMALS
-     * einwilligen. Das Fallback wuerde ausgerechnet die Nutzer tracken, die per Konstruktion
-     * nicht zustimmen koennen: Tracking ohne Einwilligung, entgegen DSGVO und TTDSG und
-     * entgegen dem erklaerten Prinzip dieses Plugins (siehe meta.html.twig, Consent-Guard).
+     * einwilligen. Das Fallback würde ausgerechnet die Nutzer tracken, die per Konstruktion
+     * nicht zustimmen können: Tracking ohne Einwilligung, entgegen DSGVO und TTDSG und
+     * entgegen dem erklärten Prinzip dieses Plugins (siehe meta.html.twig, Consent-Guard).
      *
-     * Eine serverseitige Consent-Pruefung hilft nicht: Wer kein JavaScript hat, kann kein
-     * Consent-Cookie besitzen. Wer JavaScript hat, fuehrt <noscript> nie aus.
+     * Eine serverseitige Consent-Prüfung hilft nicht: Wer kein JavaScript hat, kann kein
+     * Consent-Cookie besitzen. Wer JavaScript hat, führt <noscript> nie aus.
      *
      * Historie: Bis 1.2.0 existierte `layout/body.html.twig` mit genau diesem Snippet. Es hat
      * nie gerendert, weil es ein Template erweiterte, das es in Shopware nicht gibt
      * (`@Storefront/storefront/layout/body.html.twig` -- den <body> definiert base.html.twig).
-     * Der Vorgaenger dieses Tests hat genau das GRUEN geprueft: Er nagelte fest, dass das
+     * Der Vorgänger dieses Tests hat genau das GRUEN geprüft: Er nagelte fest, dass das
      * Template auf eine nicht existierende Datei zeigt. Ein Test kann einen Bug auch
      * zementieren, statt ihn zu finden.
      */
@@ -179,7 +179,7 @@ final class TwigTemplateContractTest extends TestCase
             self::assertStringNotContainsString(
                 'googletagmanager.com/ns.html',
                 $inhalt,
-                'GTM-noscript-Fallback in ' . $datei->getFilename() . ' -- laedt ohne Einwilligung.',
+                'GTM-noscript-Fallback in ' . $datei->getFilename() . ' -- lädt ohne Einwilligung.',
             );
         }
     }
