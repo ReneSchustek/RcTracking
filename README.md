@@ -51,12 +51,16 @@ Der Preis: Nutzer ohne JavaScript – ein Bruchteil eines Prozents – tauchen i
 
 ## Installation
 
+Das Plugin gehört als Ordner `custom/plugins/RcTracking` in die Shopware-Installation. Übertragen wird er von Hand — per FTP in dieses Verzeichnis kopieren; ein Composer-Paket gibt es nicht. Danach registriert Shopware ihn über die folgenden Befehle:
+
 ```bash
 bin/console plugin:refresh
 bin/console plugin:install --activate RcTracking
 bin/console cache:clear
 bin/console theme:compile
 ```
+
+**Aktualisierungen laufen denselben Weg.** Den neuen Ordner per FTP über den alten legen, danach `plugin:refresh` und `plugin:update RcTracking`. Eine Aktualisierung von selbst gibt es nicht — ohne Composer-Paket und ohne Shopware-Store bleibt sie Sache des Betreibers. Vor einem Sprung über eine Hauptversion gehört ein Datenbank-Abzug dazu.
 
 Danach im Admin unter **Einstellungen → Plugins → RcTracking** konfigurieren.
 
@@ -72,5 +76,3 @@ Danach im Admin unter **Einstellungen → Plugins → RcTracking** konfigurieren
 ## Lizenz
 
 MIT
-
-<!-- TRIAGE-WORKFLOW: auto-managed by triage-deploy.ps1 -->
