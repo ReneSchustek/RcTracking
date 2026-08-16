@@ -53,6 +53,8 @@ Der Preis: Nutzer ohne JavaScript – ein Bruchteil eines Prozents – tauchen i
 
 Das Plugin gehört als Ordner `custom/plugins/RcTracking` in die Shopware-Installation. Übertragen wird er von Hand — per FTP in dieses Verzeichnis kopieren; ein Composer-Paket gibt es nicht. Danach registriert Shopware ihn über die folgenden Befehle:
 
+Als Archiv geht es auch ohne FTP: In der Administration unter **Erweiterungen → Meine Erweiterungen → Erweiterung hochladen** nimmt Shopware eine ZIP-Datei entgegen und legt sie selbst an die richtige Stelle; auf der Konsole tut `plugin:zip-import` dasselbe. Danach folgen dieselben Schritte wie unten. Wer das Archiv unter macOS packt, entfernt vorher den Ordner `__MACOSX` — sonst weist Shopware die Datei ab.
+
 ```bash
 bin/console plugin:refresh
 bin/console plugin:install --activate RcTracking
