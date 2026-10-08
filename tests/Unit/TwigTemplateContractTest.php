@@ -157,30 +157,50 @@ final class TwigTemplateContractTest extends TestCase
      * Template auf eine nicht existierende Datei zeigt. Ein Test kann einen Bug auch
      * zementieren, statt ihn zu finden.
      */
-    public function testKeinGtmNoscriptFallbackImPlugin(): void
+    public function testNoGtmNoscriptFallbackInThePlugin(): void
     {
         self::assertFileDoesNotExist(
             __DIR__ . '/../../src/Resources/views/storefront/layout/body.html.twig',
             'Das body-Template wurde bewusst entfernt. Siehe README, Abschnitt DSGVO.',
         );
 
-        $verzeichnis = new \RecursiveIteratorIterator(
+        $directory = new \RecursiveIteratorIterator(
             new \RecursiveDirectoryIterator(__DIR__ . '/../../src/Resources/views'),
         );
 
-        foreach ($verzeichnis as $datei) {
-            if (!$datei->isFile() || !str_ends_with((string) $datei->getFilename(), '.twig')) {
+        foreach ($directory as $file) {
+            if (!$file->isFile() || !str_ends_with((string) $file->getFilename(), '.twig')) {
                 continue;
             }
 
-            $inhalt = file_get_contents((string) $datei->getPathname());
-            self::assertIsString($inhalt);
+            $content = file_get_contents((string) $file->getPathname());
+            self::assertIsString($content);
 
             self::assertStringNotContainsString(
                 'googletagmanager.com/ns.html',
-                $inhalt,
-                'GTM-noscript-Fallback in ' . $datei->getFilename() . ' -- lädt ohne Einwilligung.',
+                $content,
+                'GTM-noscript-Fallback in ' . $file->getFilename() . ' -- lädt ohne Einwilligung.',
             );
         }
+    }
+
+    /**
+     * Das Skript für „begin_checkout“ lädt nur mit eingeschaltetem Schalter und nur auf den drei Seiten
+     * des Kassengangs; sonst sendete es auf jeder Seite, auf der Wbm Warenkorbdaten schreibt.
+     */
+    public function testBeginCheckoutScriptIsGuardedBySwitchAndCheckoutRoutes(): void
+    {
+        $base = file_get_contents(__DIR__ . '/../../src/Resources/views/storefront/base.html.twig');
+        self::assertNotFalse($base);
+
+        self::assertStringContainsString("sw_extends '@Storefront/storefront/base.html.twig'", $base);
+        self::assertStringContainsString('{% block base_body_script %}', $base);
+        self::assertStringContainsString('{{ parent() }}', $base);
+        self::assertStringContainsString("config('RcTracking.config.beginCheckoutOnce')", $base);
+        self::assertStringContainsString("'frontend.checkout.register.page': 'login'", $base);
+        self::assertStringContainsString("'frontend.checkout.confirm.page': 'confirm'", $base);
+        self::assertStringContainsString("'frontend.checkout.finish.page': 'finish'", $base);
+        self::assertStringContainsString("asset('bundles/rctracking/begin-checkout.js', 'asset')", $base);
+        self::assertStringContainsString(' defer', $base, 'Ohne defer liefe das Skript, bevor der Körper steht.');
     }
 }

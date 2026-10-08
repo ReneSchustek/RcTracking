@@ -1,0 +1,20 @@
+{% sw_extends '@Storefront/storefront/base.html.twig' %}
+
+{#
+    `begin_checkout` genau einmal je Kassengang: Das Skript liest die Warenkorbdaten, die
+    WbmTagManagerAnalytics im Kopf der Seite geschrieben hat; deshalb steht es am Ende des Körpers und
+    lädt mit `defer`. Nur auf den drei Seiten des Kassengangs, und nur mit eingeschaltetem Schalter.
+#}
+{% block base_body_script %}
+    {{ parent() }}
+
+    {% set rcCheckoutSteps = {
+        'frontend.checkout.register.page': 'login',
+        'frontend.checkout.confirm.page': 'confirm',
+        'frontend.checkout.finish.page': 'finish'
+    } %}
+    {% if config('RcTracking.config.beginCheckoutOnce') and rcCheckoutSteps[activeRoute] is defined %}
+        <script src="{{ asset('bundles/rctracking/begin-checkout.js', 'asset') }}"
+                data-rc-tracking-step="{{ rcCheckoutSteps[activeRoute] }}" defer></script>
+    {% endif %}
+{% endblock %}

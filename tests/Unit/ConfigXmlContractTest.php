@@ -50,6 +50,7 @@ final class ConfigXmlContractTest extends TestCase
         yield 'uetId' => ['uetId'];
         yield 'customCode' => ['customCode'];
         yield 'cmpMarketingPurposeId' => ['cmpMarketingPurposeId'];
+        yield 'beginCheckoutOnce' => ['beginCheckoutOnce'];
     }
 
     /**
@@ -58,7 +59,8 @@ final class ConfigXmlContractTest extends TestCase
     public function testExpectedInputFieldExists(string $expectedName): void
     {
         $found = false;
-        foreach (self::load()->card->{'input-field'} as $field) {
+        // Über alle Karten: Der Schalter für den Kassengang steht auf einer eigenen.
+        foreach (self::load()->xpath('//input-field') ?: [] as $field) {
             if ((string) $field->name === $expectedName) {
                 $found = true;
                 break;
@@ -118,5 +120,17 @@ final class ConfigXmlContractTest extends TestCase
             return;
         }
         self::fail('Feld uetEnabled nicht gefunden');
+    }
+
+    /**
+     * Ab Werk aus: Die Installation auf Live darf nichts am Tracking ändern, bevor die Wbm-Module
+     * angepasst sind.
+     */
+    public function testBeginCheckoutOnceIsOffByDefault(): void
+    {
+        $fields = self::load()->xpath("//input-field[name='beginCheckoutOnce']") ?: [];
+        self::assertCount(1, $fields);
+        self::assertSame('bool', (string) $fields[0]['type']);
+        self::assertSame('false', (string) $fields[0]->defaultValue);
     }
 }

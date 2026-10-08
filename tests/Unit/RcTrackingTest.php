@@ -15,6 +15,12 @@ final class RcTrackingTest extends TestCase
 {
     public function testPluginExtendsShopwarePlugin(): void
     {
-        self::assertTrue(is_subclass_of(RcTracking::class, Plugin::class));
+        $reflection = new \ReflectionClass(RcTracking::class);
+
+        // Die Vererbung selbst prüft der Compiler; ein Test darauf kann nicht fehlschlagen.
+        // Prüfbar ist dagegen, ob Shopware die Klasse tatsächlich laden kann: Eine abstrakte
+        // Plugin-Klasse bricht erst beim Installieren, und dann steht der Shop.
+        self::assertFalse($reflection->isAbstract(), 'Plugin-Klasse darf nicht abstrakt sein');
+        self::assertTrue($reflection->isSubclassOf(Plugin::class), 'Plugin-Klasse muss von Plugin erben');
     }
 }

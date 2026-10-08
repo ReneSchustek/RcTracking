@@ -20,6 +20,9 @@ Container-ID eintragen, fertig. GTM kümmert sich dann um den Rest.
 **Microsoft UET (Bing Ads)**
 An/Aus-Schalter und Tag-ID – mehr braucht es nicht.
 
+**Kassenbeginn genau einmal**
+Schalter „begin_checkout genau einmal je Kassengang“ (ab Werk aus). Sendet `begin_checkout` einmal je Warenkorb, auf der Anmelde- oder der Bestätigungsseite, mit den Warenkorbdaten von „Google Tag Manager + GA4 E-Commerce Tracking“ (Wbm). Dort an „Checkout Register Page“ und „Confirm Page“ die Eigenschaft „event“ entfernen; solange sie steht, sendet der Schalter nichts dazu. Braucht nach der Installation `assets:install` (macht `rc-rollout.sh`).
+
 **Eigener Tracking-Code**
 Für alles andere: Meta Pixel, TikTok, Affiliate-Tracking. Einfach den JavaScript-Code ins Textfeld, das Plugin übernimmt die Einbindung.
 

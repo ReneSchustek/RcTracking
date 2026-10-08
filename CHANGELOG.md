@@ -3,6 +3,21 @@
 Alle wesentlichen Änderungen an diesem Projekt werden hier dokumentiert.
 Format basiert auf [Keep a Changelog](https://keepachangelog.com/de/1.0.0/).
 
+## [1.5.0] - 2026-10-08 — Kassenbeginn genau einmal je Kassengang
+
+> **Deployment:** `php bin/console plugin:install --activate RcTracking` (bzw. `plugin:update`),
+> `php bin/console assets:install`, `php bin/console cache:clear`. Danach in Wbm an „Checkout Register Page“
+> und „Confirm Page“ die Eigenschaft „event“ entfernen und den Schalter einschalten.
+
+### Neu
+
+- **„begin_checkout genau einmal je Kassengang“** (Schalter, ab Werk aus). WbmTagManagerAnalytics meldete
+  den Kassenbeginn an Anmelde- und Bestätigungsseite, also für jeden Gast zweimal und nach jedem
+  Eingabefehler erneut. Ein Skript am Seitenende nimmt die Warenkorbdaten von Wbm und sendet das Ereignis
+  einmal je Warenkorb (Fingerabdruck einen Tag im `localStorage`, auf der Abschlussseite gelöscht). Schreibt
+  Wbm selbst noch `begin_checkout`, sendet das Skript nichts dazu. Gemessen an einer Kopie des Shops: Gast mit
+  Anmeldung und Bestätigung 3 → 1 Sendung an GA4, mit Artikeln, Wert und Währung.
+
 ## [1.4.0] - 2026-07-21 — Consent-Prüfung korrigiert (Marketing lädt nur bei echter Einwilligung)
 
 > **Deployment:** `php bin/console plugin:update RcTracking && php bin/console cache:clear`.
