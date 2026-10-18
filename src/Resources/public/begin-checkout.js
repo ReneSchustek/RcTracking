@@ -78,7 +78,7 @@
         try {
             storage.setItem(STORAGE_KEY, JSON.stringify({ signature: fingerprint, at: now }));
         } catch (e) {
-            // Voller oder gesperrter Speicher: Die nächste Seite zählt dann womöglich erneut, wie bisher.
+            // Voller oder gesperrter Speicher: Die nächste Seite zählt dann womöglich erneut, als gäbe es den Merker nicht.
         }
     }
 

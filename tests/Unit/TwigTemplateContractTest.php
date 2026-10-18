@@ -150,12 +150,12 @@ final class TwigTemplateContractTest extends TestCase
      * Eine serverseitige Consent-Prüfung hilft nicht: Wer kein JavaScript hat, kann kein
      * Consent-Cookie besitzen. Wer JavaScript hat, führt <noscript> nie aus.
      *
-     * Historie: Bis 1.2.0 existierte `layout/body.html.twig` mit genau diesem Snippet. Es hat
-     * nie gerendert, weil es ein Template erweiterte, das es in Shopware nicht gibt
+     * Ein `layout/body.html.twig` mit diesem Snippet würde ohnehin nie rendern, weil es ein
+     * Template erweitert, das es in Shopware nicht gibt
      * (`@Storefront/storefront/layout/body.html.twig` -- den <body> definiert base.html.twig).
-     * Der Vorgänger dieses Tests hat genau das GRUEN geprüft: Er nagelte fest, dass das
-     * Template auf eine nicht existierende Datei zeigt. Ein Test kann einen Bug auch
-     * zementieren, statt ihn zu finden.
+     * Ein Test, der nur festhält, dass das Template auf diese Datei zeigt, bliebe dabei grün und
+     * zementierte den Fehler, statt ihn zu finden. Deshalb prüft dieser Test, dass es die Datei
+     * nicht gibt.
      */
     public function testNoGtmNoscriptFallbackInThePlugin(): void
     {
