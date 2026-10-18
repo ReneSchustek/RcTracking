@@ -1,5 +1,5 @@
 // Tests für public/begin-checkout.js: „begin_checkout“ genau einmal je Kassengang. Ginge das schief,
-// zählten GA4 und die Ads-Conversion den Kassenbeginn wieder doppelt, oder gar nicht mehr.
+// zählten GA4 und die Ads-Conversion den Kassenbeginn doppelt oder gar nicht.
 //
 // Ohne Abhängigkeiten, nur node:test. Das Skript wird mit einem Ersatz-Fenster ausgewertet; so läuft der
 // ausgelieferte Quelltext unverändert.
