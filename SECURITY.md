@@ -10,7 +10,7 @@
 
 Sicherheitslücken bitte **nicht** als öffentliches GitHub Issue melden.
 
-Kontakt: rene@ruhrcoder.de
+Kontakt: info@ruhrcoder.de
 
 Bitte die folgenden Informationen mitliefern:
 - Beschreibung der Schwachstelle
