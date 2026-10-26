@@ -80,4 +80,4 @@ Danach im Admin unter **Einstellungen → Plugins → RcTracking** konfigurieren
 
 ## Lizenz
 
-MIT
+Proprietär – siehe [composer.json](composer.json).
